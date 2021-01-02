@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <!-- <v-app-bar app dark>
+    <v-app-bar app dark v-if="this.$router.currentRoute.path != '/auth'">
       <v-toolbar-title>
         <font :color="logo.colors[0]">{{logo.text[0]}}</font>        
         <font :color="logo.colors[1]">{{logo.text[1]}}</font>
       </v-toolbar-title>
-    </v-app-bar> -->
+    </v-app-bar>
     <v-main class="main-wrapper">
         <router-view/>
     </v-main>
@@ -15,6 +15,8 @@
 <script>
 export default {
   name: 'App',
+  components: {
+  },
   data: () => ({
     logo: {
       text: ['Development ', 'System'],

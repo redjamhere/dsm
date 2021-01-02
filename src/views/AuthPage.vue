@@ -26,9 +26,10 @@
                                 counter @click:append="show1 = !show1"></v-text-field>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                                <v-col><v-btn text x-large block color="grey" @click="requirePassword">Забыли пароль?</v-btn></v-col>
                             </v-col>
-                            <v-col class="d-flex" cols="12" sm="6" xsm="12" align-end>
-                                <v-btn x-large block :disabled="!valid" color="#41c8d4" @click="handleLogin">Вход в систему</v-btn>
+                            <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                                <v-col><v-btn x-large block :disabled="!valid" color="#41c8d4" @click="handleLogin">Вход в систему</v-btn></v-col>
                             </v-col>
                         </v-row>
                     </v-form>
@@ -111,6 +112,10 @@ export default {
         resetValidation() {
             this.$refs.form.resetValidation();
         },
+        requirePassword() {
+            this.errorMessage = 'Вспомни';
+            this.snackbar = true;
+        }
     }
 }
 </script>
@@ -119,6 +124,6 @@ export default {
     .auth-wrapper{
         background-image: url('../assets/logoBG.png');
         background-size: 100%;
-        background-repeat: no-repeat;
+        background-repeat: repeat;
     }
 </style>
