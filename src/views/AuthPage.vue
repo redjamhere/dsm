@@ -31,7 +31,7 @@
                             <v-col class="d-flex" cols="12" sm="6" xsm="12">
                                 <v-col><v-btn x-large block :disabled="!valid" color="#41c8d4" @click="handleLogin">Вход в систему</v-btn></v-col>
                             </v-col>
-                        </v-row>
+                        </v-row> 
                     </v-form>
                 </v-card-text>
             </v-card>
@@ -48,7 +48,7 @@
                 v-bind="attrs"
                 @click="snackbar = false"
                 >
-                Close
+                Закрыть
             </v-btn>
         </template>
         </v-snackbar>
@@ -96,7 +96,7 @@ export default {
                  this.$store.dispatch('auth/login', this.user).then(
                     () => {
                         this.cardLoading = false;
-                        this.$router.push('/');
+                        this.$router.push('/projects');
                     },
                     error => {
                         this.cardLoading = false;
@@ -122,7 +122,7 @@ export default {
 
 <style lang="scss" scoped>
     .auth-wrapper{
-        background-image: url('../assets/logoBG.png');
+        background-image: url('../assets/wbBG.png');
         background-size: 100%;
         background-repeat: repeat;
     }
