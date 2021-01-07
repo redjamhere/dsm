@@ -1,16 +1,25 @@
-const initialState = {selectedTableAction: null}
+const initialState = {
+  selectedTable: null,
+  selectedTableAction: null,
+}
 
 export const tables = {
   namespaced: true,
   state: initialState,
   actions: {
-    selectTable({commit}, tableAction) {
-      commit('selectedSuccess', tableAction);
+    setTableAction({commit}, tableAction) {
+      commit('setTableActionSuccess', tableAction);
+    },
+    setSelectedTable({commit}, key) {
+      commit('setSelectedTableSuccess', key);
     }
   },
   mutations: {
-    selectedSuccess(state, tableAction) {
+    setTableActionSuccess(state, tableAction) {
       state.selectedTableAction = tableAction;
+    },
+    setSelectedTableSuccess(state, key) {
+      state.selectedTable = key;
     }
   }
 }

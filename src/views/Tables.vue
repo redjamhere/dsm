@@ -12,6 +12,7 @@
           <file-models-picker-list 
             :loader="fileModelsLoading"
             :filemodels="fileModels"
+            @getTableData="getTableData"
           />
         </v-col>
         <v-col cols="8">
@@ -19,7 +20,7 @@
           </v-card>
         </v-col>
         <v-col>
-          <table-type-list :tables="tables"/>
+          <table-type-list :tables="tables" @getTableData="getTableData"/>
         </v-col>
       </v-row>
       <v-snackbar
@@ -69,6 +70,7 @@ import FileModelsPickerList from '@/components/FileModelsPickerList.vue';
       projectId: null,
       fileModelsLoading: false,
       fileModels: { sortedByProjects: null, unsorted: [] },
+      selectedFileModelId: null
     }),
     created () {
       this.fileModelsLoading = true;
@@ -102,6 +104,27 @@ import FileModelsPickerList from '@/components/FileModelsPickerList.vue';
             this.fileModels.unsorted.push(fileModel);
           }
         })
+      },
+      getTableData() {
+        if( this.$store.state.tables.selectedTableAction === null 
+            || this.$store.state.filemodels.selectedFileModelId === null) {
+          this.errorMessage = 'Выберите тип таблицы и модуль для отображения';
+          this.snackbar = true;
+        } else {
+          this.$store.dispatch(
+            this.$store.state.tables.selectedTableAction, 
+            this.$store.state.filemodels.selectedFileModelId
+          ).then(
+            () => {
+              console.log('ok');
+            },
+            error => {
+              this.cardLoading = false;
+              this.errorMessage = (error.response && error.response.data) || error.message || error.toString();
+              this.snackbar = true;
+            }
+          )
+        }
       }
     }
   }

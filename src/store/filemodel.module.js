@@ -1,6 +1,7 @@
 import FileModelService from '../services/filemodels.service';
 
 const initialState = {
+  selectedFileModelId: null,
   fileModels: null,
   tableContent: null
 };
@@ -102,6 +103,9 @@ export const filemodels = {
             return Promise.reject(error);
           }
         )
+    },
+    setSelectedFileModelId({commit}, id) {
+      commit('setSelectedFileModelIdSuccess', id);
     }
   },
   mutations: {
@@ -140,6 +144,9 @@ export const filemodels = {
     },
     typesCharacteristicsFailure(state) {
       state.tableContent = null;
+    },
+    setSelectedFileModelIdSuccess(state, id) {
+      state.selectedFileModelId = id;
     }
   }
 }

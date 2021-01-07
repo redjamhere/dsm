@@ -9,7 +9,7 @@
         <v-list-item
           v-for="(table, i) in tables"
           :key="i"
-          @click="handleTableSelect(table.action)"
+          @click="handleTableSelect(table.action, i)"
         >
           <v-list-item-content>
             <v-list-item-title v-text="table.title"></v-list-item-title>
@@ -27,9 +27,14 @@ export default {
   data: () => ({
     selectedTable: null,
   }),
+  created() {
+    this.selectedTable = this.$store.state.tables.selectedTable;
+  },
   methods: {
-    handleTableSelect(action) {
-      this.$store.dispatch('tables/selectTable', action);
+    handleTableSelect(action, key) {
+      this.$store.dispatch('tables/setSelectedTable', key);
+      this.$store.dispatch('tables/setTableAction', action);
+      this.$emit('getTableData');
     },
   }
 }
