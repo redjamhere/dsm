@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar app dark v-if="this.$router.currentRoute.path != '/auth'">
+    <v-app-bar 
+      app 
+      dark 
+      v-if="this.$router.currentRoute.path != '/auth'"
+      >
       <v-toolbar-title>
         <font :color="logo.colors[0]">{{logo.text[0]}}</font>        
         <font :color="logo.colors[1]">{{logo.text[1]}}</font>

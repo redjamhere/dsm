@@ -37,20 +37,20 @@
             </v-card>
         </v-row>
         <v-snackbar
-        v-model="snackbar"
-        :multi-line="multiLine"
+            v-model="snackbar"
+            :multi-line="multiLine"
         >
-        {{ errorMessage }}
-        <template v-slot:action="{ attrs }">
-            <v-btn
-                color="red"
-                text
-                v-bind="attrs"
-                @click="snackbar = false"
-                >
-                Закрыть
-            </v-btn>
-        </template>
+            {{ errorMessage }}
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="red"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                    >
+                    Закрыть
+                </v-btn>
+            </template>
         </v-snackbar>
     </v-container>
 </template>

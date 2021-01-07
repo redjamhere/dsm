@@ -8,27 +8,45 @@
         </v-col>
       </v-row>
       <v-row class="fill-height">
-        <v-col>
-          <v-card height="100%" dark color="#424242">
-
-          </v-card>
+        <v-col cols="2">
+          <file-models-picker-list 
+            :loader="fileModelsLoading"
+            :filemodels="fileModels"
+          />
         </v-col>
         <v-col cols="8">
-          <v-card height="100%" dark color="#424242">
+          <v-card dark class="custom-card">
           </v-card>
         </v-col>
         <v-col>
           <table-type-list :tables="tables"/>
         </v-col>
       </v-row>
+      <v-snackbar
+        v-model="snackbar"
+        :multi-line="true"
+      >
+        {{ errorMessage }}
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="red"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+            >
+            Закрыть
+            </v-btn>
+        </template>
+      </v-snackbar>
     </v-container>
 </template>
 
 <script>
 import TableTypeList from '@/components/TableTypeList.vue';
+import FileModelsPickerList from '@/components/FileModelsPickerList.vue';
 
   export default {
-    components: {TableTypeList},
+    components: {TableTypeList, FileModelsPickerList},
     data: () => ({
       projectName: 'всем моделям',
       tables: [
@@ -36,14 +54,56 @@ import TableTypeList from '@/components/TableTypeList.vue';
         { title: 'Уровни', action: 'filemodels/getLevels'}, 
         { title: 'Базовые точки', action: 'filemodels/getBasePoints'}, 
         { title: 'Типы', action: 'filemodels/getTypes'},
-        { title: 'Характеристики типов', action: 'filemodels/getTypesCharacteristics' },
+        { 
+          title: 'Характеристики типов', 
+          action: 'filemodels/getTypesCharacteristics' 
+        },
         { 
           title: 'Параметры элементов', 
           action: 'filemodels/getFullTypesCharacteristics' 
         }, 
         { title: 'Ведомость объемов работ', action: '' }
       ],
+      snackbar: false,
+      errorMessage: '',
+      projectId: null,
+      fileModelsLoading: false,
+      fileModels: { sortedByProjects: null, unsorted: [] },
     }),
+    created () {
+      this.fileModelsLoading = true;
+      if (this.projectId === null) {
+        this.$store.dispatch('filemodels/getAllFileModels')
+          .then(
+            () => {
+              this.$store.dispatch('projects/getProjects')
+                .then(
+                  () => {
+                    this.sortFileModels();
+                    this.fileModelsLoading = false;
+                  }
+                );
+            },
+            error => {
+              this.fileModelsLoading = false;
+              this.errorMessage = (error.response && error.response.data) 
+                                  || error.message 
+                                  || error.toString();
+              this.snackbar = true;
+            }
+          );
+      }
+    },
+    methods: {
+      sortFileModels() {
+        this.fileModels.sortedByProjects = this.$store.state.projects.projects;
+        this.$store.state.filemodels.fileModels.map((fileModel) => {
+          if(fileModel.projectcode === null) {
+            this.fileModels.unsorted.push(fileModel);
+          }
+        })
+      }
+    }
   }
 </script>
 

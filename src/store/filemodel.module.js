@@ -1,11 +1,27 @@
 import FileModelService from '../services/filemodels.service';
 
-const initialState = {tableContent: null};
+const initialState = {
+  fileModels: null,
+  tableContent: null
+};
 
 export const filemodels = {
   namespaced: true,
   state: initialState,
   actions: {
+    getAllFileModels({commit}) {
+      return FileModelService.getAllFileModels()
+        .then(
+          fileModels => {
+            commit('fileModelsSuccess', fileModels);
+            return Promise.resolve(fileModels);
+          },
+          error => {
+            commit('fileModelsFailure');
+            return Promise.reject(error);
+          }
+        )
+    },
     getBasePoints({commit}, fileModelId) {
       return FileModelService.getBaseBoints(fileModelId)
         .then(
@@ -89,6 +105,12 @@ export const filemodels = {
     }
   },
   mutations: {
+    fileModelsSuccess(state, fileModels) {
+      state.fileModels = fileModels;
+    },
+    fileModelsFailure(state) {
+      state.fileModels = null;
+    },
     basePointsSuccess(state, tableContent) {
       state.tableContent = tableContent;
     },

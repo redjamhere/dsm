@@ -25,22 +25,11 @@ export default {
   name: "TableTypeList",
   props: ['tables'],
   data: () => ({
-    selectedTable: 0,
+    selectedTable: null,
   }),
-  created () {
-    // console.log(this.$store.state.filemodels.tableContent);
-  },
   methods: {
     handleTableSelect(action) {
-      this.$store.dispatch(action, 1)
-        .then(
-          () => {
-            console.log('ok');
-          },
-          error => {
-            console.log(error);
-          }
-        )
+      this.$store.dispatch('tables/selectTable', action);
     },
   }
 }

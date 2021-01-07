@@ -5,6 +5,7 @@
     dark
     expand-on-hover
     class="pt-13 custom-nav"
+    src="../assets/flatbgGrey.png"
   >
     <v-list
       nav

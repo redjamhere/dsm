@@ -3,6 +3,13 @@ import axios from 'axios';
 const API_URL = 'http://dsm.ds.do:8080/rest/';
 
 class FileModelService {
+  // получить все модели
+  getAllFileModels() {
+    return axios
+      .get(API_URL + 'filemodels')
+      .then(response => response.data)
+      .catch(err => `Ошибка запроса: ${err}`)
+  }
   // базовые  точки
   getBaseBoints(fileModelId) {
     return axios
