@@ -10,7 +10,11 @@
     <template slot="progress">
       <v-progress-linear color="#55c6d3" indeterminate></v-progress-linear>
     </template>
+    <v-card-text v-if="this.$store.state.charts.selectedChart.title == ''">
+      Выберите тип
+    </v-card-text>
     <v-list 
+      v-else
       dense 
       color="#424242" 
       class="overflow-y-auto" 

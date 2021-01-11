@@ -4,8 +4,8 @@ const initialState = {
   categories: null,
   agregateElements: {},
   separateElements: {},
-  selectedCategory: null,
-  selectedChart: null,
+  selectedCategory: {name: ''},
+  selectedChart: {title: ''},
 }
 
 export const charts = {

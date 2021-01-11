@@ -19,7 +19,7 @@
             color="green"
             :to="'/tables/' + project.code"
           >
-            Открыть
+            Таблицы
           </v-btn>
           <v-btn
             class="ml-2 mt-5"

@@ -6,11 +6,6 @@
       fluid
     >
       <v-row class="fill-height custom-row">
-        <v-col cols="12">
-          <v-card dark color="#424242">
-            <v-card-title>Таблицы по {{projectName}}</v-card-title>
-          </v-card>
-        </v-col>
         <v-col cols="2" class="fill-height">
           <!-- <file-models-picker-list
             :loader="fileModelsLoading"
@@ -33,6 +28,7 @@
         <v-col md="6" >
           <file-models-data-chart
             :agregateChartData="agregateChartData"
+            :separateChartData="separateChartData"
            />
           <!-- <file-models-data-table 
             :tableHeaders="tableHeaders" 
@@ -128,6 +124,7 @@ import FileModelsChartPickerList from '../components/FileModelsChartPickerList.v
       fileModelsLoading: false,
       fileModels: { sortedByProjects: null, unsorted: [] },
       agregateChartData: [],
+      separateChartData: [],
       categories: null,
       snackbarSuccess: false,
       successMessage: '',
@@ -193,8 +190,19 @@ import FileModelsChartPickerList from '../components/FileModelsChartPickerList.v
           ).then(
             () => {
               this.agregateChartData = this.sortData(this.$store.state.charts.agregateElements);
-              this.successMessage = 'Данные успешно загружены';
-              this.snackbarSuccess = true;
+              this.$store.dispatch(
+                'charts/getQuantityElementsSeparate',
+                {
+                  "fileModelDtos": this.$store.state.filemodels.selectedFileModel,
+                  "rvtBuiltInCategoryDtos" : [this.$store.state.charts.selectedCategory],
+                }
+              ).then(
+                () => {
+                  this.separateChartData = this.sortSeparateData(this.$store.state.charts.separateElements);
+                  this.successMessage = 'Данные успешно загружены';
+                  this.snackbarSuccess = true;
+                }
+              )
             },
             error => {
               this.cardLoading = false;
@@ -214,9 +222,23 @@ import FileModelsChartPickerList from '../components/FileModelsChartPickerList.v
       },
       sortData(data) {
         let sortedData = {};
-        data.map(el => {
+        let dataKeys = Object.keys(data);
+        data[dataKeys[1]].map(el => {
           let keys = Object.keys(el);
           sortedData[this.dateStringify(el[keys[1]])] = el[keys[0]];
+        });
+        return sortedData;
+      },
+      sortSeparateData(data) {
+        let sortedData = [];
+        data.map(el => {
+          let keys = Object.keys(el);
+          let sortedValues = {};
+          el[keys[2]].map(el => {
+          let keys = Object.keys(el);
+            sortedValues[this.dateStringify(el[keys[1]])] = el[keys[0]];
+          });
+          sortedData.push({name: el.fileModel.filename, data: sortedValues});
         })
         return sortedData;
       },

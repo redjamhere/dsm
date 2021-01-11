@@ -7,8 +7,8 @@
         color="#55c6d3"
       >
         <v-list-item
-          v-for="(chart) in charts"
-          :key="chart.value"
+          v-for="(chart, i) in charts"
+          :key="i"
           @click="handleChartSelect(chart)"
         >
           <v-list-item-content>
