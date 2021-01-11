@@ -1,8 +1,9 @@
 <template>
     <v-bottom-navigation 
         :value="value" 
-        color="#55c6d3" 
+        color="#55c6d3"
         dark
+        absolute
         grow
     >
         <v-btn class="bottom-nav-item" value="models" to="/models" color="#2e2e2e">

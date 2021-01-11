@@ -18,9 +18,7 @@
     <v-main class="main-wrapper">
       <router-view />
     </v-main>
-    <div>
       <BottomNav v-if="this.$router.currentRoute.path != '/auth'"/>
-    </div>
   </v-app>
 </template>
 

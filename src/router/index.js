@@ -24,12 +24,12 @@ const routes = [
     component: () => import('../views/AuthPage.vue'),
   },
   {
-    path: '/tables',
+    path: '/tables/:projectCode',
     name: 'Tables',
     component: () => import('../views/Tables.vue'),
   },
   {
-    path: '/charts',
+    path: '/charts/:projectCode',
     name: 'Charts',
     component: () => import('../views/Charts.vue'),
   }

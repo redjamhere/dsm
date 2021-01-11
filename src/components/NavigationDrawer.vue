@@ -11,13 +11,13 @@
       nav
       dense
     >
-      <v-list-item link to="/tables">
+      <v-list-item link to="/tables/all">
         <v-list-item-icon>
           <v-icon>mdi-table</v-icon>
         </v-list-item-icon>
         <v-list-item-title>Таблицы</v-list-item-title>
       </v-list-item>
-      <v-list-item link to="/charts">
+      <v-list-item link to="/charts/all">
         <v-list-item-icon>
           <v-icon>mdi-chart-box</v-icon>
         </v-list-item-icon>

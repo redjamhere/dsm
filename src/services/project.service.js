@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const API_URL = 'http://dsm.ds.do:8080/rest/projects';
+const API_URL = 'http://dsm.ds.do:8080/rest/projects/';
 
 class ProjectService {
-   getProjects() {
+   getProjects(projectId) {
         return axios
-            .get(API_URL)
+            .get(API_URL + projectId)
             .then(response => {
                 return response.data;
             })

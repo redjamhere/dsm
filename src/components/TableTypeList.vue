@@ -1,5 +1,5 @@
 <template>
-  <v-card height="100%" dark color="#424242" class="mx-auto">
+  <v-card dark color="#424242" class="mx-auto" height="100%">
     <v-list dense color="#424242">
       <v-subheader><h3>Таблицы</h3></v-subheader>
       <v-list-item-group
@@ -9,12 +9,17 @@
         <v-list-item
           v-for="(table, i) in tables"
           :key="i"
-          @click="handleTableSelect(table.action, i)"
+          @click="handleTableSelect(table, i)"
         >
           <v-list-item-content>
             <v-list-item-title v-text="table.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item> 
+        <v-list-item link to="/projects">
+          <v-list-item-content>
+            <v-list-item-title>Ведомость объемов работ</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-card>
@@ -23,7 +28,7 @@
 <script>
 export default {
   name: "TableTypeList",
-  props: ['tables'],
+  props: ['tables', 'height'],
   data: () => ({
     selectedTable: null,
   }),
@@ -31,9 +36,8 @@ export default {
     this.selectedTable = this.$store.state.tables.selectedTable;
   },
   methods: {
-    handleTableSelect(action, key) {
-      this.$store.dispatch('tables/setSelectedTable', key);
-      this.$store.dispatch('tables/setTableAction', action);
+    handleTableSelect(table) {
+      this.$store.dispatch('tables/setTable', table);
       this.$emit('getTableData');
     },
   }

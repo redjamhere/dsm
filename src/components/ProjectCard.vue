@@ -17,8 +17,16 @@
             class="ml-2 mt-5"
             small
             color="green"
+            :to="'/tables/' + project.code"
           >
             Открыть
+          </v-btn>
+          <v-btn
+            class="ml-2 mt-5"
+            small
+            color="#55c6d3"
+          >
+            Изменить
           </v-btn>
           <v-btn
             class="ml-2 mt-5"
@@ -48,7 +56,9 @@ export default {
     props: ['project'],
     data: () => ({
       color: randomColor({ luminosity: 'dark', format: 'rgb' })
-    })
+    }),
+    methods: {
+    },
 }
 </script>
 

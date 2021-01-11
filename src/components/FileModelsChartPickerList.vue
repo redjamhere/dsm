@@ -24,6 +24,7 @@
       ></v-autocomplete>
     </div>
     
+    
     <v-list 
       dense 
       color="#424242" 
@@ -42,39 +43,17 @@
           <v-list-item-title>{{project.name}}</v-list-item-title>
         </template>
         <v-list-item-group
-          v-model="selectedFileModel"
+          active-class=""
           color="#55c6d3"
         >
           <v-list-item
             v-for="(filemodel) in project.fileModelDtos"
-            :key="filemodel.id"
-            @click="handlePickFileModel(filemodel)"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="filemodel.filename"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list-group>
-      <v-list-group
-        v-if="this.$route.params == 'all'"
-        :value="false"
-      >
-        <template v-slot:activator>
-          <v-list-item-title>Не привязанные</v-list-item-title>
-        </template>
-        <v-list-item-group
-          v-model="selectedFileModel"
-          color="#55c6d3"
-        >
-          <v-list-item
-            v-for="(filemodel) in filemodels.unsorted"
-            :key="filemodel.id"
-            @click="handlePickFileModel(filemodel)"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="filemodel.filename"></v-list-item-title>
-            </v-list-item-content>
+            :key="filemodel.id">
+            <v-checkbox
+              :value="filemodel"
+              :label="filemodel.filename"
+              @change="handleCheckFileModel(filemodel)"
+            /> 
           </v-list-item>
         </v-list-item-group>
       </v-list-group>
@@ -84,12 +63,13 @@
 
 <script>
 export default {
-  name: 'FileModelPickerList',
+  name: 'FileModelChartPickerList',
   props: ['loader', 'filemodels'],
   data: () => ({
     selectedFileModel: null,
     autoCompleteLoading: false,
     allFileModels: [],
+    checkedFileModels: [],
     fileModelSelected: null,
     height: 0,
   }),
@@ -116,6 +96,25 @@ export default {
         this.$emit('getTableData');
       } else if (this.$parent.$options.name == 'Charts') {
         this.$emit('getChartData');
+      }
+    },
+    handleCheckFileModel(fileModel) {
+      if(!this.checkedFileModels.includes(fileModel)) {
+        this.checkedFileModels.push(fileModel);
+        this.$store.dispatch('filemodels/setSelectedFileModel', this.checkedFileModels);
+        if(this.$parent.$options.name == 'Tables') {
+          this.$emit('getTableData');
+        } else if (this.$parent.$options.name == 'Charts') {
+          this.$emit('getChartData');
+        }
+      } else {
+        this.checkedFileModels.splice(this.checkedFileModels.indexOf(fileModel), 1);
+        this.$store.dispatch('filemodels/setSelectedFileModel', this.checkedFileModels);
+        if(this.$parent.$options.name == 'Tables') {
+          this.$emit('getTableData');
+        } else if (this.$parent.$options.name == 'Charts') {
+          this.$emit('getChartData');
+        }
       }
     },
     customFilter (item, queryText) {

@@ -1,9 +1,9 @@
 import FileModelService from '../services/filemodels.service';
 
 const initialState = {
-  selectedFileModelId: null,
+  selectedFileModel: null,
   fileModels: null,
-  tableContent: null
+  tableContent: null,
 };
 
 export const filemodels = {
@@ -104,11 +104,17 @@ export const filemodels = {
           }
         )
     },
-    setSelectedFileModelId({commit}, id) {
-      commit('setSelectedFileModelIdSuccess', id);
+    setSelectedFileModel({commit}, fileModel) {
+      commit('setSelectedFileModelSuccess', fileModel);
+    },
+    setFileModels({commit}, filemodels) {
+      commit('setFileModelsSuccess', filemodels);
     }
   },
   mutations: {
+    setFileModelsSuccess(state, filemodels) {
+      state.fileModels = filemodels;
+    },
     fileModelsSuccess(state, fileModels) {
       state.fileModels = fileModels;
     },
@@ -133,6 +139,12 @@ export const filemodels = {
     levelsFailure(state) {
       state.tableContent = null;
     },
+    typesSuccess(state, tableContent) {
+      state.tableContent = tableContent;
+    },
+    typesFailure(state) {
+      state.tableContent = null;
+    },
     typeCharacteristicsSuccess(state, tableContent) {
       state.tableContent = tableContent;
     },
@@ -145,8 +157,8 @@ export const filemodels = {
     typesCharacteristicsFailure(state) {
       state.tableContent = null;
     },
-    setSelectedFileModelIdSuccess(state, id) {
-      state.selectedFileModelId = id;
+    setSelectedFileModelSuccess(state, fileModel) {
+      state.selectedFileModel = fileModel;
     }
   }
 }

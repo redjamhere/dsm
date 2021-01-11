@@ -5,6 +5,7 @@ import { auth } from './auth.module';
 import { projects } from './project.module';
 import { filemodels } from './filemodel.module';
 import { tables } from './table.module';
+import { charts } from './chart.module';
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     auth,
     projects,
     filemodels,
-    tables
+    tables,
+    charts
   },
   state: {
   },

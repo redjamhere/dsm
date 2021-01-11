@@ -1,13 +1,16 @@
 import ProjectService from '../services/project.service';
 
-const initialState = {projects: null};
+const initialState = {projects: null, selectedProject: null};
 
 export const projects = {
     namespaced: true,
     state: initialState,
     actions: {
-        getProjects({commit}) {
-            return ProjectService.getProjects()
+        setProject({commit}, project) {
+            commit('setProjectSuccess', project);
+        },
+        getProjects({commit}, projectId = '') {
+            return ProjectService.getProjects(projectId)
                 .then(
                     projects => {
                         commit('projectsSuccess', projects);
@@ -21,6 +24,9 @@ export const projects = {
         }   
     },
     mutations: {
+        setProjectSuccess(state, project) {
+            state.selectedProject = project;
+        },
         projectsSuccess(state, projects) {
             state.projects = projects;
         },
